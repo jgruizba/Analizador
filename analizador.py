@@ -4,16 +4,17 @@ import argparse
 from scapy.all import *
 
 
-
-class Analizador:
-'''Clase que encapsula el análisis de las tramas 
+''' Clase que encapsula el análisis de las tramas 
    para seleccionar la interfaz adecuada a través
-   de la cual se recibe el tráfico de red'''
+   de la cual se recibe el tráfico de red '''
+class Analizador:
+
 
     def __init__(self, args):
         self.args = args
 
     def __call__(self, packet):
+        print('Paquete:',packet.summary(), sep='\n')
         packet.show()
 
     def run_forever(self):
