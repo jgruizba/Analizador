@@ -4,24 +4,27 @@ import argparse
 from scapy.all import *
 
 
-class Sniffer:
+
+class Analizador:
+'''Clase que encapsula el análisis de las tramas 
+   para seleccionar la interfaz adecuada a través
+   de la cual se recibe el tráfico de red'''
+
     def __init__(self, args):
         self.args = args
 
     def __call__(self, packet):
-        if self.args.verbose:
-            packet.show()
-        else:
-            print(packet.summary())
+        packet.show()
 
     def run_forever(self):
         sniff(iface=self.args.interface, prn=self, store=0)
 
 
 if __name__ == "__main__":
+    ''' El nombre de la interfaz se recibe por medio del
+        argumento -i en la línea de comandos'''
     parser = argparse.ArgumentParser()
-    parser.add_argument('-v', '--verbose', default=False, action='store_true', help='be more talkative')
-    parser.add_argument('-i', '--interface', type=str, required=True, help='network interface name')
+    parser.add_argument('-i', '--interface', type=str, required=True, help='Nombre de la interfaz')
     args = parser.parse_args()
-    sniffer = Sniffer(args)
-    sniffer.run_forever()
+    analizador = Analizador(args)
+    analizador.run_forever()
